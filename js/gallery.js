@@ -63,65 +63,79 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
+const galleryContainer = document.querySelector("ul");
 
-function galleryBuilder(images) {
-  const galleryContainer = document.querySelector("ul");
-  galleryContainer.appendChild(fragmentBuilder(images));
-}
-
-function fragmentBuilder(images) {
-  const fragment = document.createDocumentFragment();
-  images.forEach((image) => {
-    const resCreateElementLi = createElementLi();
-    const resCreateElementLink = createElementLink(image);
-    const resReateImg = createImg(image);
-    resCreateElementLink.appendChild(resReateImg);
-    resCreateElementLi.appendChild(resCreateElementLink);
-    fragment.appendChild(resCreateElementLi);
-  });
-  return fragment;
-}
-function createElementLi() {
-  const createdElementLi = document.createElement("li");
-  createdElementLi.classList.add("gallery-item");
-  return createdElementLi;
-}
-
-function createElementLink(image) {
-
-  const createdElementLink = document.createElement("a");
-  createdElementLink.classList.add("gallery-link");
-  createdElementLink.href = image.original;
-  const instance = basicLightbox.create(`<img src="${image.original}" alt="${image.description}">`);
-  createdElementLink.addEventListener("click",(event) =>imedgeClickIvent (event, instance)
-);
-createdElementLink.addEventListener("keydown",(event) =>closeModal (event, instance)
-);
+// preview — посилання на маленьку версію зображення для картки галереї
+// original — посилання на велику версію зображення для модального вікна
+// description — текстовий опис зображення, для атрибута alt малого зображення та підпису великого зображення в модалці.
 
 
-  return createdElementLink;
-}
 
-function createImg(image) {
-  const createdImg = document.createElement("img");
-  createdImg.classList.add("gallery-image");
-  createdImg.src = image.preview;
-  createdImg.setAttribute("data-source", "large-image.jpg");
-  createdImg.alt = image.description;
-  return createdImg;
-}
-function imedgeClickIvent (event, instance){
-  event.preventDefault();
-  console.log(event.target.src);
-  instance.show();
+const createMarkup = images.map((image) => `
+  <li class="gallery-item">
+    <a class="gallery-link" href="${image.original}">
+      <img
+        class="gallery-image"
+        src="${image.preview}"
+        data-source="${image.original}"
+        alt="Image ${image.description}"
+      />
+    </a>
+  </li>`
+).join('');
+
+galleryContainer.insertAdjacentHTML("beforeend", createMarkup);
+
+const galleryItems = galleryContainer.querySelectorAll("li");
+
+galleryItems.forEach((item) => {
+  const imageLink = item.querySelector(".gallery-link").getAttribute("href");
+
+  item.addEventListener("click", function(event) {
+    event.preventDefault();
+    const instance = basicLightbox.create(
+      `<img src="${imageLink}" width="1112px" height="640px">`
+    );
+    
   
-}
+    instance.show();
+  });
+});
+// function createElementLink(image) {
 
-function closeModal (event, instance){
-if (event.key === "Escape"){
-  instance.close();
-}
+//   const createdElementLink = document.createElement("a");
+//   createdElementLink.classList.add("gallery-link");
+//   createdElementLink.href = image.original;
+//   const instance = basicLightbox.create(`<img src="${image.original}" alt="${image.description}">`);
+//   createdElementLink.addEventListener("click",(event) =>imedgeClickIvent (event, instance)
+// );
+// createdElementLink.addEventListener("keydown",(event) =>closeModal (event, instance)
+// );
 
-}
 
-galleryBuilder(images);
+//   return createdElementLink;
+// }
+
+// function createImg(image) {
+//   const createdImg = document.createElement("img");
+//   createdImg.classList.add("gallery-image");
+//   createdImg.src = image.preview;
+//   createdImg.setAttribute("data-source", "large-image.jpg");
+//   createdImg.alt = image.description;
+//   return createdImg;
+// }
+// function imedgeClickIvent (event, instance){
+//   event.preventDefault();
+//   console.log(event.target.src);
+//   instance.show();
+  
+// }
+
+// function closeModal (event, instance){
+// if (event.key === "Escape"){
+//   instance.close();
+// }
+
+// }
+
+// galleryBuilder(images);
