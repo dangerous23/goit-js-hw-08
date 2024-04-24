@@ -112,4 +112,3 @@ galleryContainer.addEventListener("click", function(event) {
 //       instance.show();
 //   });
 // });
-/
