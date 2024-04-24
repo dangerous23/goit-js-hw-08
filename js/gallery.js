@@ -86,56 +86,30 @@ const createMarkup = images.map((image) => `
 
 galleryContainer.insertAdjacentHTML("beforeend", createMarkup);
 
-const galleryItems = galleryContainer.querySelectorAll("li");
-
-galleryItems.forEach((item) => {
-  const imageLink = item.querySelector(".gallery-link").getAttribute("href");
-
-  item.addEventListener("click", function(event) {
-    event.preventDefault();
-    const instance = basicLightbox.create(
-      `<img src="${imageLink}" width="1112px" height="640px">`
-    );
-    
-  
-    instance.show();
-  });
+galleryContainer.addEventListener("click", function(event) {
+  event.preventDefault(); 
+  const galleryLink = event.target.closest(".gallery-link"); 
+  if (!galleryLink) return; 
+  const imageLink = galleryLink.getAttribute("href"); 
+  const instance = basicLightbox.create(
+    `<img src="${imageLink}" width="1112px" height="640px">`
+  );
+  instance.show();
 });
-// function createElementLink(image) {
+// galleryContainer.insertAdjacentHTML("beforeend", createMarkup);
 
-//   const createdElementLink = document.createElement("a");
-//   createdElementLink.classList.add("gallery-link");
-//   createdElementLink.href = image.original;
-//   const instance = basicLightbox.create(`<img src="${image.original}" alt="${image.description}">`);
-//   createdElementLink.addEventListener("click",(event) =>imedgeClickIvent (event, instance)
-// );
-// createdElementLink.addEventListener("keydown",(event) =>closeModal (event, instance)
-// );
+// const galleryItems = galleryContainer.querySelectorAll("li");
 
+// galleryItems.forEach((item) => {
+//   const imageLink = item.querySelector(".gallery-link").getAttribute("href");
 
-//   return createdElementLink;
-// }
-
-// function createImg(image) {
-//   const createdImg = document.createElement("img");
-//   createdImg.classList.add("gallery-image");
-//   createdImg.src = image.preview;
-//   createdImg.setAttribute("data-source", "large-image.jpg");
-//   createdImg.alt = image.description;
-//   return createdImg;
-// }
-// function imedgeClickIvent (event, instance){
-//   event.preventDefault();
-//   console.log(event.target.src);
-//   instance.show();
-  
-// }
-
-// function closeModal (event, instance){
-// if (event.key === "Escape"){
-//   instance.close();
-// }
-
-// }
-
-// galleryBuilder(images);
+//   item.addEventListener("click", function(event) {
+//     event.preventDefault();
+    
+//     const instance = basicLightbox.create(
+//       `<img src="${imageLink}" width="1112px" height="640px">`
+//     );
+//       instance.show();
+//   });
+// });
+/
