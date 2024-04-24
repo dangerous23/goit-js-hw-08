@@ -1,0 +1,22 @@
+.gallery {
+list-style: none;
+display: flex;
+flex-wrap: wrap;
+gap: 24px;
+width: 1128px;
+height: 200px;
+padding-left: 0;
+margin: 24px 156px;
+}
+
+.gallery-image {
+width: 360px;
+height: 200px;
+transition: width 0.3s ease, height 0.3s ease;
+}
+
+.gallery-image:hover {
+   
+    transform: scale(1.05);
+   cursor: url(../img/Vector.png) 40 40, pointer;
+    }
